@@ -7,10 +7,10 @@ import time
 from . import condor
 from . import slurm
 from .remote import INFILE_FMT, OUTFILE_FMT
-from .util import random_string
+from .util import random_string, local_filename
 import cloudpickle
 
-LOGFILE_FMT = 'cfut.log.%s.txt'
+LOGFILE_FMT = local_filename('cfut.log.%s.txt')
 
 class RemoteException(Exception):
     def __init__(self, error):
@@ -65,6 +65,7 @@ class ClusterExecutor(futures.Executor):
     """An abstract base class for executors that run jobs on clusters.
     """
     def __init__(self, debug=False, keep_logs=False):
+        os.makedirs(local_filename(), exist_ok=True)
         self.debug = debug
 
         self.jobs = {}
