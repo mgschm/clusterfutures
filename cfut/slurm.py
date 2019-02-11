@@ -35,4 +35,5 @@ def submit(cmdline, outpath=OUTFILE_FMT.format('%j'), job_resources=None, additi
         *additional_setup_lines,
         "srun {}".format(cmdline),
     ]
+    print('\n'.join(script_lines))
     return submit_text('\n'.join(script_lines))
